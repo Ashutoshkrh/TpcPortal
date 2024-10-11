@@ -149,6 +149,10 @@ const alumniSearch = expressAsyncHandler(async (req, res) => {
     res.json(alumnies);
 });
 
+const fetchMyDetails = expressAsyncHandler(async (req,res) => {
+    const details = req.user;
+    res.json(details);
+});
+    
 
-
-module.exports = { loginController, registerController, updateController, deleteController,alumniSearch};
+module.exports = { loginController, registerController, updateController, deleteController,alumniSearch, fetchMyDetails};

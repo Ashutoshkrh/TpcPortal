@@ -109,6 +109,11 @@ const fetchController = expressAsyncHandler(async (req, res) => {
     res.json({companies: companies, message: "successfully fetched"});
 
 });
+
+const fetchMyDetails = expressAsyncHandler(async (req,res) => {
+    const details = req.user;
+    res.json(details);
+});
     
 
-module.exports = { loginController, registerController, updateController, deleteController,fetchController};
+module.exports = { loginController, registerController, updateController, deleteController,fetchController, fetchMyDetails};

@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 
-const CompanyLogin = () => {
+const AlumniLogin = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
@@ -11,10 +11,10 @@ const CompanyLogin = () => {
   
   const authToken = localStorage.getItem('authToken');
 
-  // If already logged in, navigate to the student dashboard
+  // If already logged in, navigate to the alumni dashboard
   useEffect(() => {
     if (authToken) {
-      navigate('/company');
+      navigate('/alumni');
     }
   }, [authToken, navigate]);
   
@@ -25,14 +25,14 @@ const CompanyLogin = () => {
     setError('');
 
     try {
-      const response = await axios.post('/api/company/login', { email, password });
+      const response = await axios.post('/api/alumni/login', { email, password });
       console.log('Login successful', response.data);
       
       // Store token in localStorage
       localStorage.setItem('authToken', response.data.token);
       
-      // Redirect to student dashboard
-      navigate('/company');
+      // Redirect to alumni dashboard
+      navigate('/alumni');
     } catch (err) {
       setError('Invalid email or password');
     } finally {
@@ -42,13 +42,13 @@ const CompanyLogin = () => {
 
   // Handle navigation to register page
   const handleRegisterClick = () => {
-    navigate('/company/register');
+    navigate('/alumni/register');
   };
 
   return (
     <div className="flex h-screen justify-center items-center bg-gray-100">
       <div className="w-full max-w-md bg-white shadow-lg rounded-lg p-8">
-        <h2 className="text-2xl font-semibold text-center mb-6">Company Login</h2>
+        <h2 className="text-2xl font-semibold text-center mb-6">Alumni Login</h2>
         
         {error && <div className="text-red-500 text-sm mb-4">{error}</div>}
 
@@ -107,4 +107,4 @@ const CompanyLogin = () => {
   );
 };
 
-export default CompanyLogin;
+export default AlumniLogin;

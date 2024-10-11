@@ -22,13 +22,14 @@ const Sidebar = () => {
               to="/student/login"
               className="flex items-center p-3 rounded-md transition-colors duration-200 hover:bg-red-700"
             >
+              
               <HiUserGroup className="mr-3 text-xl" />
               Student
             </Link>
           </li>
           <li>
             <Link
-              to="/company"
+              to="/company/login"
               className="flex items-center p-3 rounded-md transition-colors duration-200 hover:bg-red-700"
             >
               <HiOfficeBuilding className="mr-3 text-xl" /> {/* Updated icon */}
@@ -37,14 +38,14 @@ const Sidebar = () => {
           </li>
           <li>
             <Link
-              to="/alumni"
+              to="/alumni/login"
               className="flex items-center p-3 rounded-md transition-colors duration-200 hover:bg-red-700"
             >
               <HiUsers className="mr-3 text-xl" />
               Alumni
             </Link>
           </li>
-          <li>
+          {/* <li>
             <Link
               to="/packages"
               className="flex items-center p-3 rounded-md transition-colors duration-200 hover:bg-red-700"
@@ -52,7 +53,7 @@ const Sidebar = () => {
               <HiBriefcase className="mr-3 text-xl" />
               Packages
             </Link>
-          </li>
+          </li> */}
           <li>
             <Link
               to="/contact"
