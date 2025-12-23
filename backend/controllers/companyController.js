@@ -14,7 +14,7 @@ const loginController = expressAsyncHandler(async (req, res) => {
             email: company.email,
             description: company.description,
             message:"Successfully logged in",
-            token: generateToken(company._id)
+            token: generateToken(company._id, "company")
         });
     } else {
         res.status(401).json({ message: "Invalid email or password" });
@@ -45,7 +45,7 @@ const registerController = expressAsyncHandler(async (req, res) => {
             name: company.name,
             email: company.email,
             description: company.description,
-            token: generateToken(company._id),
+            token: generateToken(company._id, "company"),
         });
     } else {
         res.status(400);
@@ -79,7 +79,7 @@ const updateController = expressAsyncHandler(async (req, res) => {
             email: updatedcompany.email,
             description: updatedcompany.description,
             message: "Successfully updated",
-            token: generateToken(updatedcompany._id),
+            token: generateToken(updatedcompany._id, "company"),
         });
     } else {
         res.status(404);
