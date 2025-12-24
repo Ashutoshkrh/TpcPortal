@@ -145,12 +145,13 @@ const alumniSearch = expressAsyncHandler(async (req, res) => {
         query.rollNo = { $regex: req.body.rollNo, $options: "i" };
     }
 
-    const alumnies = await alumniModel.find(query).select("-password").select("-_id");
+    const alumnies = await alumniModel.find(query).select("-password");
     res.json(alumnies);
 });
 
 const fetchMyDetails = expressAsyncHandler(async (req,res) => {
     const details = req.user;
+    
     res.json(details);
 });
     

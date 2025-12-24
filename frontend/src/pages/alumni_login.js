@@ -30,7 +30,8 @@ const AlumniLogin = () => {
       
       // Store token in localStorage
       localStorage.setItem('authToken', response.data.token);
-      
+      localStorage.setItem("entity", JSON.stringify(response.data));
+
       // Redirect to alumni dashboard
       navigate('/alumni');
     } catch (err) {

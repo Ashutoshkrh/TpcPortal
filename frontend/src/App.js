@@ -18,6 +18,7 @@ import AlumniPage from './pages/alumni_page';
 import CompanyUpdate from './pages/company_update';
 import AlumniUpdate from './pages/alumni_update';
 import ContactPage from './pages/contacts_page';
+import ChatPage from './pages/chat';
 //set up routes
 
 function App() {
@@ -37,6 +38,7 @@ function App() {
           <Route path="/alumni" element={<AlumniPage />} />
           <Route path="/student/login" element={<StudentLogin />} />
           <Route path="/student/register" element={<StudentRegister />} />
+          <Route path="/chat" element={<ChatPage />}/>
           <Route path="/alumnisearch" element={<AlumniSearch />} />
           <Route path="/student/update" element={<StudentUpdate />} />
           <Route path="/company/update" element={<CompanyUpdate />} />

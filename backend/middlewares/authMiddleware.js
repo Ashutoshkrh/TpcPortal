@@ -15,10 +15,12 @@ const protect = expressAsyncHandler(async (req, res, next) => {
       token = req.headers.authorization.split(" ")[1];
       const decoded = jwt.verify(token, process.env.JWT_SECRET);
       
-      console.log("#########################################################################################")
-      console.log(decoded)
-      console.log("#########################################################################################")
+      
       let user;
+    //   if(role!=decoded.role){
+    //     res.status(401);
+    //     throw new Error("Invalid role");
+    //   }
 
       if (decoded.role === "User") {
         user = await User.findById(decoded.id).select("-password");
@@ -39,7 +41,7 @@ const protect = expressAsyncHandler(async (req, res, next) => {
       // 🔑 VERY IMPORTANT
       req.user = user;
       req.user.role = decoded.role;
-
+      console.log(decoded, user);
       next();
     } catch (error) {
       console.error(error);

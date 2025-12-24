@@ -3,47 +3,71 @@ import ChatRoom from "../models/chatroomModel.js";
 // Create or get 1-on-1 or group chat
 export async function createOrGetChatRoom(req, res) {
   try {
-    const { participants, name } = req.body;
+    const { participants, name, receiverId, receiverType } = req.body;
 
     const currentUser = {
       userId: req.user._id,
       userType: req.user.role,
     };
 
-    const allParticipants = [currentUser, ...participants];
+    let finalParticipants = [];
 
-    if (allParticipants.length < 2) {
-      return res.status(400).json({ message: "At least 2 participants required" });
+    // 🟢 CASE 1 — One-to-one chat (coming from alumni search button)
+    if (receiverId) {
+      finalParticipants = [
+        currentUser,
+        {
+          userId: receiverId,
+          userType: receiverType || "alumni", // default if not passed
+        },
+      ];
+    }
+
+    // 🟢 CASE 2 — Normal chat create (participants array passed)
+    else if (Array.isArray(participants)) {
+      finalParticipants = [currentUser, ...participants];
+    }
+
+    else {
+      return res.status(400).json({
+        message: "participants[] or receiverId is required",
+      });
+    }
+
+    if (finalParticipants.length < 2) {
+      return res
+        .status(400)
+        .json({ message: "At least 2 participants required" });
     }
 
     let room = null;
 
-    // Only check duplicates for 1-on-1
-    if (allParticipants.length === 2) {
+    // 🟢 Duplicate check only for 1-1 chat
+    if (!name && finalParticipants.length === 2) {
       room = await ChatRoom.findOne({
         isGroup: false,
         participants: {
-          $all: allParticipants.map(p => ({
-            $elemMatch: p
-          })),
+          $all: finalParticipants.map(p => ({ $elemMatch: p })),
         },
       });
     }
 
+    // 🟢 Create if not found
     if (!room) {
       room = await ChatRoom.create({
-        participants: allParticipants,
+        participants: finalParticipants,
         name: name || "",
-        isGroup: allParticipants.length > 2,
+        isGroup: finalParticipants.length > 2,
       });
     }
 
     res.status(200).json(room);
   } catch (error) {
     console.error("createOrGetChatRoom error:", error);
-    res.status(500).json({ message: "Server error" });
+    res.status(500).json({ message: "Server error", error: error.message });
   }
 }
+
 
 // Get rooms for logged-in user
 export async function getUserChatRooms(req, res) {

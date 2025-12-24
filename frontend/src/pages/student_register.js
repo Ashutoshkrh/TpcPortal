@@ -52,6 +52,7 @@ const StudentRegister = () => {
 
       // Store the auth token in local storage
       localStorage.setItem('authToken', response.data.token);
+      localStorage.setItem("entity", JSON.stringify(response.data));
 
       // Navigate to student dashboard upon successful registration
       navigate('/student');

@@ -9,6 +9,7 @@ const userRoute = require('./routes/userRoute');
 const alumniRoute = require('./routes/alumniRoute');
 const companyRoute = require('./routes/companyRoute');
 const chatRoute = require('./routes/chatRoute')
+const messageRoute = require('./routes/messageRoute')
 // const { login, signup } = require('./controllers/userController');
 // const { protect } = require("./middlewares/authMiddleware");
 
@@ -52,6 +53,7 @@ app.use('/user', userRoute);
 app.use('/alumni', alumniRoute);
 app.use('/company', companyRoute);
 app.use('/chat', chatRoute);
+app.use('/messages', messageRoute);
 app.get('/api',(req,resp)=>{
     resp.send('kya ji api thik hai na');
 });
