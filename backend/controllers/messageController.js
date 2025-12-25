@@ -7,7 +7,7 @@ exports.getMessages = async (req, res) => {
 
     const messages = await Message.find({ chatRoomId })
       .sort({ createdAt: 1 }) // chronological
-      .populate("senderId", "name role"); // optional
+      .populate("sender.userId", "name email")
 
     res.status(200).json(messages);
   } catch (error) {

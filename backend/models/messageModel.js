@@ -1,22 +1,30 @@
 const mongoose = require("mongoose");
 
-const messageModel = new mongoose.Schema(
+const messageSchema = new mongoose.Schema(
   {
     chatRoomId: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "ChatRoom",
       required: true,
-      index: true,
     },
-    senderId: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "User",
-      required: true,
+
+    sender: {
+      userId: {
+        type: mongoose.Schema.Types.ObjectId,
+        required: true,
+        refPath: "sender.userType",
+      },
+      userType: {
+        type: String,
+        required: true,
+        enum: ["User", "alumni"], // SAME as chatroom participants
+      },
     },
+
     text: {
       type: String,
-      required: true,
       trim: true,
+      required: true,
     },
   },
   {
@@ -24,4 +32,7 @@ const messageModel = new mongoose.Schema(
   }
 );
 
-module.exports = mongoose.model("Message", messageModel);
+// Faster queries inside a room
+messageSchema.index({ chatRoomId: 1, createdAt: 1 });
+
+module.exports = mongoose.model("Message", messageSchema);
