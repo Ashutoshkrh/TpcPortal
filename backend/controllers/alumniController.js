@@ -16,7 +16,7 @@ const loginController = expressAsyncHandler(async (req, res) => {
             passout_year: alumni.passout_year,
             branch: alumni.branch,
             company: alumni.company,
-            token: generateToken(alumni._id)
+            token: generateToken(alumni._id, "alumni")
         });
     }
     else{
@@ -56,7 +56,7 @@ const registerController=expressAsyncHandler (async (req,res)=>{
             branch:alumni.branch,
             rollNo:alumni.rollNo,
             company:alumni.company,
-            token: generateToken(alumni._id),
+            token: generateToken(alumni._id, "alumni"),
         });
         
     }
@@ -107,7 +107,7 @@ const updateController = expressAsyncHandler(async (req, res) => {
             branch: updatedalumni.branch,
             company: updatedalumni.company,
             message: "Successfully updated",
-            token: generateToken(updatedalumni._id),
+            token: generateToken(updatedalumni._id, "alumni"),
         });
     } else {
         res.status(404);
@@ -145,12 +145,13 @@ const alumniSearch = expressAsyncHandler(async (req, res) => {
         query.rollNo = { $regex: req.body.rollNo, $options: "i" };
     }
 
-    const alumnies = await alumniModel.find(query).select("-password").select("-_id");
+    const alumnies = await alumniModel.find(query).select("-password");
     res.json(alumnies);
 });
 
 const fetchMyDetails = expressAsyncHandler(async (req,res) => {
     const details = req.user;
+    
     res.json(details);
 });
     

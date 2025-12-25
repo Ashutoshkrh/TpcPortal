@@ -15,7 +15,7 @@ const loginController = expressAsyncHandler(async (req, res) => {
             passout_year: user.passout_year,
             branch: user.branch,
             message:"Successfully logged in",
-            token: generateToken(user._id)
+            token: generateToken(user._id,"User")
         });
     }
     else{
@@ -54,7 +54,7 @@ const registerController=expressAsyncHandler (async (req,res)=>{
             passout_year:user.passout_year,
             branch:user.branch,
             rollNo:user.rollNo,
-            token: generateToken(user._id),
+            token: generateToken(user._id,"User"),
         });
         
     }
@@ -102,7 +102,7 @@ const updateController = expressAsyncHandler(async (req, res) => {
             passout_year: updatedUser.passout_year,
             branch: updatedUser.branch,
             message: "Successfully updated",
-            token: generateToken(updatedUser._id),
+            token: generateToken(updatedUser._id, "User"),
         });
     } else {
         res.status(404);
